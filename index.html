@@ -1,44 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" href="/Logo.png" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <!-- Title & Description -->
-    <title>Expert Office Furnish - Your Health Your Wealth</title>
-    <meta
-      name="description"
-      content="Expert Office Furnish offers health-conscious and elegant office furniture in Accra, Ghana. Explore ergonomic chairs, stylish desks, and more. Nationwide delivery available."
-    />
-    <meta
-      name="keywords"
-      content="Office Furniture Ghana, Expert Office Furnish, Accra Furniture, Ergonomic Chairs, Desks, Cabinets, Ghana Office Supplies"
-    />
-    <meta name="author" content="Expert Office Furnish Co. Ltd." />
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" href="/Logo.png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <!-- GEO Tags -->
-    <meta name="geo.region" content="GH-AA" />
-    <meta name="geo.placename" content="Accra" />
-    <meta name="geo.position" content="5.6037;-0.1870" />
-    <meta name="ICBM" content="5.6037, -0.1870" />
+  <!-- Title & Description -->
+  <title>Expert Office Furnish - Your Health Your Wealth</title>
+  <meta name="description"
+    content="Expert Office Furnish offers health-conscious and elegant office furniture in Accra, Ghana. Explore ergonomic chairs, stylish desks, and more. Nationwide delivery available." />
+  <meta name="keywords"
+    content="Office Furniture Ghana, Expert Office Furnish, Accra Furniture, Ergonomic Chairs, Desks, Cabinets, Ghana Office Supplies" />
+  <meta name="author" content="Expert Office Furnish Co. Ltd." />
 
-    <!-- Open Graph / Social -->
-    <meta
-      property="og:title"
-      content="Expert Office Furnish | Elegant Office Furniture in Ghana"
-    />
-    <meta
-      property="og:description"
-      content="Shop premium office furniture from Expert Office Furnish in Accra, Ghana. Ergonomic, elegant, and health-focused designs."
-    />
-    <meta property="og:image" content="/pics/office-preview.jpg" />
-    <meta property="og:url" content="https://expertofficefurnish.com" />
-    <meta property="og:type" content="website" />
-    <meta name="twitter:card" content="summary_large_image" />
+  <!-- GEO Tags -->
+  <meta name="geo.region" content="GH-AA" />
+  <meta name="geo.placename" content="Accra" />
+  <meta name="geo.position" content="5.6037;-0.1870" />
+  <meta name="ICBM" content="5.6037, -0.1870" />
 
-    <!-- Structured Data for Local Business -->
-    <script type="application/ld+json">
+  <!-- Open Graph / Social -->
+  <meta property="og:title" content="Expert Office Furnish | Elegant Office Furniture in Ghana" />
+  <meta property="og:description"
+    content="Shop premium office furniture from Expert Office Furnish in Accra, Ghana. Ergonomic, elegant, and health-focused designs." />
+  <meta property="og:image" content="/pics/office-preview.jpg" />
+  <meta property="og:url" content="https://expertofficefurnish.com" />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <!-- Structured Data for Local Business -->
+  <script type="application/ld+json">
       {
         "@context": "https://schema.org",
         "@type": "FurnitureStore",
@@ -81,31 +73,106 @@
         ]
       }
     </script>
-    
-    <!-- Supabase Connectivity Optimization -->
-    <link rel="preconnect" href="https://ioqzspoaanccesvylnpe.supabase.co" crossorigin>
-    <script>
-      // Warm up Supabase immediately to prevent cold start failures
-      (function() {
-        const url = 'https://ioqzspoaanccesvylnpe.supabase.co/rest/v1/products?select=id&limit=1';
-        const key = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlvcXpzcG9hYW5jY2VzdnlsbnBlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTQwNDI4OTcsImV4cCI6MjA2OTYxODg5N30.Ot0zqKEh6seOS2E6MFYxONZ3ZanGtihRU5lKtfM8Oxc';
-        
-        console.log("⚡ Proactive Supabase Warmup initiated...");
-        fetch(url, {
-          method: 'GET',
-          headers: {
-            'apikey': key,
-            'Authorization': 'Bearer ' + key,
-            'Prefer': 'count=exact'
+
+  <!-- Supabase Connectivity Optimization -->
+  <link rel="preconnect" href="https://ioqzspoaanccesvylnpe.supabase.co" crossorigin>
+  <script>
+    // Warm up Supabase immediately to prevent cold start failures
+    (function () {
+      const url = 'https://ioqzspoaanccesvylnpe.supabase.co/rest/v1/products?select=id&limit=1';
+      const key = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlvcXpzcG9hYW5jY2VzdnlsbnBlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTQwNDI4OTcsImV4cCI6MjA2OTYxODg5N30.Ot0zqKEh6seOS2E6MFYxONZ3ZanGtihRU5lKtfM8Oxc';
+
+      console.log("⚡ Proactive Supabase Warmup initiated...");
+      fetch(url, {
+        method: 'GET',
+        headers: {
+          'apikey': key,
+          'Authorization': 'Bearer ' + key,
+          'Prefer': 'count=exact'
+        }
+      }).then(() => console.log("✅ Supabase is warm and ready."))
+        .catch(err => console.warn("⚠️ Supabase warmup ping failed (will retry in app):", err));
+    })();
+  </script>
+  <script type="module" crossorigin src="/assets/index-B1SLQfQ5.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/index-CY6ojUYP.css">
+</head>
+
+<body>
+  <div id="root"></div>
+
+  <!-- Admin Quick Access for built application -->
+  <script>
+    (function () {
+      const checkAdmin = () => {
+        try {
+          // Read Supabase auth token from local storage
+          const authKey = 'sb-ioqzspoaanccesvylnpe-auth-token';
+          const authData = JSON.parse(localStorage.getItem(authKey));
+          const user = authData?.user;
+
+          // Check for admin identity
+          const isAdmin = user && (
+            user.email === 'expertofurnish@gmail.com' ||
+            (user.user_metadata && user.user_metadata.role && user.user_metadata.role.toLowerCase().includes('admin'))
+          );
+
+          if (isAdmin) {
+            if (document.getElementById('admin-quick-access')) return;
+
+            const btn = document.createElement('a');
+            btn.id = 'admin-quick-access';
+            btn.href = '/admin/';
+            btn.innerHTML = `
+                <div style="display: flex; align-items: center; gap: 10px;">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+                  <span>Admin Panel</span>
+                </div>
+              `;
+
+            // Premium styling for the floating button
+            Object.assign(btn.style, {
+              position: 'fixed',
+              bottom: '30px',
+              right: '30px',
+              zIndex: '2147483647', // Maximum z-index
+              backgroundColor: '#eab308', // Warm yellow matching brand
+              backgroundImage: 'linear-gradient(to right, #eab308, #ca8a04)',
+              color: 'white',
+              padding: '14px 24px',
+              borderRadius: '16px',
+              fontWeight: 'bold',
+              textDecoration: 'none',
+              boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.4), 0 8px 10px -6px rgba(0, 0, 0, 0.4)',
+              transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+              display: 'flex',
+              alignItems: 'center',
+              fontFamily: 'system-ui, -apple-system, sans-serif'
+            });
+
+            btn.onmouseenter = () => {
+              btn.style.transform = 'translateY(-5px) scale(1.05)';
+              btn.style.boxShadow = '0 20px 25px -5px rgba(0, 0, 0, 0.5)';
+            };
+            btn.onmouseleave = () => {
+              btn.style.transform = 'translateY(0) scale(1)';
+              btn.style.boxShadow = '0 10px 25px -5px rgba(0, 0, 0, 0.4)';
+            };
+
+            document.body.appendChild(btn);
+          } else {
+            // Remove button if not admin (in case of logout)
+            const existing = document.getElementById('admin-quick-access');
+            if (existing) existing.remove();
           }
-        }).then(() => console.log("✅ Supabase is warm and ready."))
-          .catch(err => console.warn("⚠️ Supabase warmup ping failed (will retry in app):", err));
-      })();
-    </script>
-    <script type="module" crossorigin src="/assets/index-B1SLQfQ5.js"></script>
-    <link rel="stylesheet" crossorigin href="/assets/index-CY6ojUYP.css">
-  </head>
-  <body>
-    <div id="root"></div>
-  </body>
+        } catch (e) { }
+      };
+
+      // Initial check and regular interval for state changes
+      setInterval(checkAdmin, 1500);
+      checkAdmin();
+    })();
+  </script>
+</body>
+
 </html>
