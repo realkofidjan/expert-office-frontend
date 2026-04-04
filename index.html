@@ -4,41 +4,6 @@
     <meta charset="UTF-8" />
     <link rel="icon" href="/Logo.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script>
-      /** 
-       * Global Fetch Interceptor for Supabase Reliability
-       * Addresses "Failed to fetch products" on first load by retrying failed Supabase calls.
-       */
-      (function() {
-        const originalFetch = window.fetch;
-        window.fetch = async function(...args) {
-          const url = typeof args[0] === 'string' ? args[0] : (args[0] && args[0].url);
-          // Only intercept Supabase requests
-          if (url && url.includes('supabase.co')) {
-            let retries = 2;
-            let lastError;
-            while (retries >= 0) {
-              try {
-                const response = await originalFetch(...args);
-                // Return immediately if successful or if it's a client-side 4xx error (which retry won't fix)
-                if (response.ok || (response.status >= 400 && response.status < 500) || retries === 0) {
-                  return response;
-                }
-                console.warn(`Supabase fetch failed (${response.status}). Retrying...`);
-              } catch (err) {
-                lastError = err;
-                if (retries === 0) throw err;
-                console.warn("Supabase fetch error. Retrying...", err);
-              }
-              retries--;
-              // Wait 800ms before retrying
-              await new Promise(r => setTimeout(r, 800));
-            }
-          }
-          return originalFetch(...args);
-        };
-      })();
-    </script>
 
     <!-- Title & Description -->
     <title>Expert Office Furnish - Your Health Your Wealth</title>
@@ -115,6 +80,27 @@
           "https://www.instagram.com/expertofficefurnish?igsh=MW1kMHlyMXAyd24zMg=="
         ]
       }
+    </script>
+    
+    <!-- Supabase Connectivity Optimization -->
+    <link rel="preconnect" href="https://ioqzspoaanccesvylnpe.supabase.co" crossorigin>
+    <script>
+      // Warm up Supabase immediately to prevent cold start failures
+      (function() {
+        const url = 'https://ioqzspoaanccesvylnpe.supabase.co/rest/v1/products?select=id&limit=1';
+        const key = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlvcXpzcG9hYW5jY2VzdnlsbnBlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTQwNDI4OTcsImV4cCI6MjA2OTYxODg5N30.Ot0zqKEh6seOS2E6MFYxONZ3ZanGtihRU5lKtfM8Oxc';
+        
+        console.log("⚡ Proactive Supabase Warmup initiated...");
+        fetch(url, {
+          method: 'GET',
+          headers: {
+            'apikey': key,
+            'Authorization': 'Bearer ' + key,
+            'Prefer': 'count=exact'
+          }
+        }).then(() => console.log("✅ Supabase is warm and ready."))
+          .catch(err => console.warn("⚠️ Supabase warmup ping failed (will retry in app):", err));
+      })();
     </script>
     <script type="module" crossorigin src="/assets/index-B1SLQfQ5.js"></script>
     <link rel="stylesheet" crossorigin href="/assets/index-CY6ojUYP.css">

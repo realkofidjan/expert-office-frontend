@@ -4,34 +4,6 @@
     <meta charset="UTF-8" />
     <link rel="icon" href="/admin/pics/Company logo.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script>
-      /** 
-       * Global Fetch Interceptor for Supabase Reliability
-       * Addresses timeout issues on first load by retrying failed Supabase calls.
-       */
-      (function() {
-        const originalFetch = window.fetch;
-        window.fetch = async function(...args) {
-          const url = typeof args[0] === 'string' ? args[0] : (args[0] && args[0].url);
-          if (url && url.includes('supabase.co')) {
-            let retries = 2;
-            while (retries >= 0) {
-              try {
-                const response = await originalFetch(...args);
-                if (response.ok || (response.status >= 400 && response.status < 500) || retries === 0) {
-                  return response;
-                }
-              } catch (err) {
-                if (retries === 0) throw err;
-              }
-              retries--;
-              await new Promise(r => setTimeout(r, 800));
-            }
-          }
-          return originalFetch(...args);
-        };
-      })();
-    </script>
     <title>Expert Office Furnish-Your Health Your Wealth</title>
     <script type="module" crossorigin src="/admin/assets/index-CWRAmi46.js"></script>
     <link rel="stylesheet" crossorigin href="/admin/assets/index-CxK50OO5.css">
