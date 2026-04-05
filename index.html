@@ -130,15 +130,27 @@
                 }
               }
             }
-            
-            if (!user) {
-              const existing = document.getElementById('admin-access-button');
-              if (existing) existing.remove();
-              return;
+
+            if (user) {
+              const role = (user.user_metadata?.role || user.app_metadata?.role || '').toLowerCase();
+              isAdmin = user.email === 'expertofurnish@gmail.com' || role.includes('admin');
             }
 
-            const role = (user.user_metadata?.role || user.app_metadata?.role || '').toLowerCase();
-            const isAdmin = user.email === 'expertofurnish@gmail.com' || role.includes('admin');
+            // Super fallback: string search across all localStorage values if not yet confirmed admin
+            if (!isAdmin) {
+              for (let i = 0; i < localStorage.length; i++) {
+                const val = localStorage.getItem(localStorage.key(i));
+                if (val && val.includes('expertofurnish@gmail.com')) {
+                  isAdmin = true;
+                  break;
+                }
+              }
+            }
+
+            if (isAdmin !== lastStatus) {
+              console.log("🎯 Admin status check:", isAdmin ? "ADMIN DETECTED" : "Regular user or logged out");
+              lastStatus = isAdmin;
+            }
 
             if (isAdmin) {
               if (document.getElementById('admin-access-button')) return;
@@ -148,23 +160,23 @@
               btn.href = '/admin/';
               btn.innerHTML = 'Admin Panel';
               btn.style.cssText = `
-                position: fixed;
-                bottom: 20px;
-                right: 20px;
-                background: linear-gradient(135deg, #d4af37 0%, #f1c40f 100%);
-                color: #000;
-                padding: 12px 24px;
-                border-radius: 50px;
-                font-weight: bold;
-                text-decoration: none;
-                z-index: 999999;
-                box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-                transition: all 0.3s ease;
-                display: flex;
-                align-items: center;
-                gap: 8px;
-                font-family: sans-serif;
-                border: 2px solid rgba(255,255,255,0.2);
+                position: fixed !important;
+                bottom: 20px !important;
+                right: 20px !important;
+                background: linear-gradient(135deg, #d4af37 0%, #f1c40f 100%) !important;
+                color: #000 !important;
+                padding: 12px 24px !important;
+                border-radius: 50px !important;
+                font-weight: bold !important;
+                text-decoration: none !important;
+                z-index: 2147483647 !important;
+                box-shadow: 0 4px 15px rgba(0,0,0,0.3) !important;
+                transition: all 0.3s ease !important;
+                display: flex !important;
+                align-items: center !important;
+                gap: 8px !important;
+                font-family: sans-serif !important;
+                border: 2px solid rgba(255,255,255,0.2) !important;
               `;
               
               btn.onmouseenter = () => {
@@ -186,7 +198,7 @@
           }
         }
 
-        setInterval(checkAdmin, 2000);
+        setInterval(checkAdmin, 2500);
         checkAdmin();
       })();
     </script>
