@@ -104,22 +104,28 @@
   <!-- Admin Quick Access for built application -->
     <script>
       (function() {
+        let lastStatus = null;
+        
         function checkAdmin() {
           try {
             let user = null;
+            let isAdmin = false;
             
             // Try defined key first
             const primaryKey = 'sb-ioqzspoaanccesvylnpe-auth-token';
             const primaryData = localStorage.getItem(primaryKey);
             if (primaryData) {
-              user = JSON.parse(primaryData).user;
+              try { 
+                const parsed = JSON.parse(primaryData);
+                user = parsed.user; 
+              } catch(e) {}
             }
 
             // If not found, scan all localStorage keys for anything that looks like a supabase auth token
             if (!user) {
               for (let i = 0; i < localStorage.length; i++) {
                 const key = localStorage.key(i);
-                if (key.includes('-auth-token')) {
+                if (key && key.indexOf('-auth-token') !== -1) {
                   try {
                     const data = JSON.parse(localStorage.getItem(key));
                     if (data && data.user) {
@@ -140,7 +146,7 @@
             if (!isAdmin) {
               for (let i = 0; i < localStorage.length; i++) {
                 const val = localStorage.getItem(localStorage.key(i));
-                if (val && val.includes('expertofurnish@gmail.com')) {
+                if (val && val.indexOf('expertofurnish@gmail.com') !== -1) {
                   isAdmin = true;
                   break;
                 }
