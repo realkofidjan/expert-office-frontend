@@ -5,6 +5,27 @@
     <link rel="icon" href="/admin/pics/Company logo.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Expert Office Furnish-Your Health Your Wealth</title>
+    
+    <!-- Supabase Connectivity Optimization -->
+    <link rel="preconnect" href="https://ioqzspoaanccesvylnpe.supabase.co" crossorigin>
+    <script>
+      // Warm up Supabase immediately to prevent cold start failures
+      (function() {
+        const url = 'https://ioqzspoaanccesvylnpe.supabase.co/rest/v1/products?select=id&limit=1';
+        const key = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlvcXpzcG9hYW5jY2VzdnlsbnBlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTQwNDI4OTcsImV4cCI6MjA2OTYxODg5N30.Ot0zqKEh6seOS2E6MFYxONZ3ZanGtihRU5lKtfM8Oxc';
+        
+        console.log("⚡ Proactive Supabase Warmup (Admin) initiated...");
+        fetch(url, {
+          method: 'GET',
+          headers: {
+            'apikey': key,
+            'Authorization': 'Bearer ' + key,
+            'Prefer': 'count=exact'
+          }
+        }).then(() => console.log("✅ Supabase is warm and ready for Admin."))
+          .catch(err => console.warn("⚠️ Supabase warmup ping failed (Admin):", err));
+      })();
+    </script>
     <script type="module" crossorigin src="/admin/assets/index-CWRAmi46.js"></script>
     <link rel="stylesheet" crossorigin href="/admin/assets/index-CxK50OO5.css">
   </head>
