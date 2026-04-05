@@ -105,23 +105,33 @@
     <script>
       (function() {
         let lastStatus = null;
+        const ADMIN_EMAILS = ['expertofurnish@gmail.com', 'phyllisdillys@gmail.com'];
         
         function checkAdmin() {
           try {
             let user = null;
             let isAdmin = false;
             
-            // Try defined key first
-            const primaryKey = 'sb-ioqzspoaanccesvylnpe-auth-token';
-            const primaryData = localStorage.getItem(primaryKey);
-            if (primaryData) {
-              try { 
-                const parsed = JSON.parse(primaryData);
-                user = parsed.user; 
-              } catch(e) {}
+            // Try defined keys first
+            const keys = [
+              'sb-ioqzspoaanccesvylnpe-auth-token',
+              'supabase.auth.token' // standard key sometimes used
+            ];
+            
+            for (const k of keys) {
+              const data = localStorage.getItem(k);
+              if (data) {
+                try {
+                  const parsed = JSON.parse(data);
+                  if (parsed.user) {
+                    user = parsed.user;
+                    break;
+                  }
+                } catch(e) {}
+              }
             }
 
-            // If not found, scan all localStorage keys for anything that looks like a supabase auth token
+            // scan all localStorage keys for anything that looks like a supabase auth token
             if (!user) {
               for (let i = 0; i < localStorage.length; i++) {
                 const key = localStorage.key(i);
@@ -139,72 +149,79 @@
 
             if (user) {
               const role = (user.user_metadata?.role || user.app_metadata?.role || '').toLowerCase();
-              isAdmin = user.email === 'expertofurnish@gmail.com' || role.includes('admin');
+              isAdmin = ADMIN_EMAILS.includes(user.email) || role.includes('admin');
             }
 
-            // Super fallback: string search across all localStorage values if not yet confirmed admin
+            // Super fallback: string search across all localStorage values
             if (!isAdmin) {
               for (let i = 0; i < localStorage.length; i++) {
                 const val = localStorage.getItem(localStorage.key(i));
-                if (val && val.indexOf('expertofurnish@gmail.com') !== -1) {
-                  isAdmin = true;
-                  break;
+                if (val) {
+                  for (const email of ADMIN_EMAILS) {
+                    if (val.indexOf(email) !== -1) {
+                      isAdmin = true;
+                      break;
+                    }
+                  }
                 }
+                if (isAdmin) break;
               }
             }
 
             if (isAdmin !== lastStatus) {
-              console.log("🎯 Admin status check:", isAdmin ? "ADMIN DETECTED" : "Regular user or logged out");
+              console.log("🎯 Admin status check (" + new Date().toLocaleTimeString() + "):", isAdmin ? "ADMIN DETECTED" : "Regular user or logged out");
               lastStatus = isAdmin;
             }
 
+            let btn = document.getElementById('admin-access-button');
             if (isAdmin) {
-              if (document.getElementById('admin-access-button')) return;
-
-              const btn = document.createElement('a');
-              btn.id = 'admin-access-button';
-              btn.href = '/admin/';
-              btn.innerHTML = 'Admin Panel';
+              if (!btn) {
+                btn = document.createElement('a');
+                btn.id = 'admin-access-button';
+                btn.href = '/admin/';
+                btn.innerHTML = 'Admin Panel';
+                document.body.appendChild(btn);
+              }
               btn.style.cssText = `
                 position: fixed !important;
-                bottom: 20px !important;
-                right: 20px !important;
+                bottom: 25px !important;
+                right: 25px !important;
                 background: linear-gradient(135deg, #d4af37 0%, #f1c40f 100%) !important;
                 color: #000 !important;
-                padding: 12px 24px !important;
+                padding: 14px 28px !important;
                 border-radius: 50px !important;
-                font-weight: bold !important;
+                font-weight: 800 !important;
                 text-decoration: none !important;
                 z-index: 2147483647 !important;
-                box-shadow: 0 4px 15px rgba(0,0,0,0.3) !important;
-                transition: all 0.3s ease !important;
+                box-shadow: 0 6px 20px rgba(0,0,0,0.4) !important;
+                transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
                 display: flex !important;
                 align-items: center !important;
                 gap: 8px !important;
-                font-family: sans-serif !important;
-                border: 2px solid rgba(255,255,255,0.2) !important;
+                font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important;
+                border: 2px solid rgba(255,255,255,0.3) !important;
+                pointer-events: auto !important;
+                visibility: visible !important;
+                opacity: 1 !important;
               `;
               
               btn.onmouseenter = () => {
                 btn.style.transform = 'translateY(-5px) scale(1.05)';
-                btn.style.boxShadow = '0 10px 25px -5px rgba(0, 0, 0, 0.4)';
+                btn.style.boxShadow = '0 12px 30px rgba(0, 0, 0, 0.5)';
               };
               btn.onmouseleave = () => {
                 btn.style.transform = 'translateY(0) scale(1)';
-                btn.style.boxShadow = '0 4px 15px rgba(0,0,0,0.3)';
+                btn.style.boxShadow = '0 6px 20px rgba(0,0,0,0.4)';
               };
-
-              document.body.appendChild(btn);
-            } else {
-              const existing = document.getElementById('admin-access-button');
-              if (existing) existing.remove();
+            } else if (btn) {
+              btn.remove();
             }
           } catch (e) {
             console.error("Admin check error:", e);
           }
         }
 
-        setInterval(checkAdmin, 2500);
+        setInterval(checkAdmin, 1500);
         checkAdmin();
       })();
     </script>
