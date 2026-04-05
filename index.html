@@ -106,25 +106,39 @@
       (function() {
         function checkAdmin() {
           try {
-            const authKey = 'sb-ioqzspoaanccesvylnpe-auth-token';
-            const authData = localStorage.getItem(authKey);
+            let user = null;
             
-            if (!authData) {
+            // Try defined key first
+            const primaryKey = 'sb-ioqzspoaanccesvylnpe-auth-token';
+            const primaryData = localStorage.getItem(primaryKey);
+            if (primaryData) {
+              user = JSON.parse(primaryData).user;
+            }
+
+            // If not found, scan all localStorage keys for anything that looks like a supabase auth token
+            if (!user) {
+              for (let i = 0; i < localStorage.length; i++) {
+                const key = localStorage.key(i);
+                if (key.includes('-auth-token')) {
+                  try {
+                    const data = JSON.parse(localStorage.getItem(key));
+                    if (data && data.user) {
+                      user = data.user;
+                      break;
+                    }
+                  } catch(e) {}
+                }
+              }
+            }
+            
+            if (!user) {
               const existing = document.getElementById('admin-access-button');
               if (existing) existing.remove();
               return;
             }
 
-            const parsedData = JSON.parse(authData);
-            const user = parsedData.user;
-            
-            if (!user) return;
-
-            const isAdmin = user && (
-              user.email === 'expertofurnish@gmail.com' || 
-              (user.user_metadata && user.user_metadata.role && user.user_metadata.role.toLowerCase().includes('admin')) ||
-              (user.app_metadata && user.app_metadata.role && user.app_metadata.role.toLowerCase().includes('admin'))
-            );
+            const role = (user.user_metadata?.role || user.app_metadata?.role || '').toLowerCase();
+            const isAdmin = user.email === 'expertofurnish@gmail.com' || role.includes('admin');
 
             if (isAdmin) {
               if (document.getElementById('admin-access-button')) return;
@@ -143,7 +157,7 @@
                 border-radius: 50px;
                 font-weight: bold;
                 text-decoration: none;
-                z-index: 9999;
+                z-index: 999999;
                 box-shadow: 0 4px 15px rgba(0,0,0,0.3);
                 transition: all 0.3s ease;
                 display: flex;
